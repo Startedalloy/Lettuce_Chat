@@ -13,7 +13,7 @@ import com.example.lettucechat.viewModel.ChatViewModel
 fun Navigation(chatViewModel: ChatViewModel) {
     val navController = rememberNavController()
 
-    NavHost(navController, startDestination = Routes.LOGIN, builder = {
+    NavHost(navController, startDestination = Routes.SIGNUP, builder = {
         composable(Routes.LOGIN) {
             LoginScreen(chatViewModel,navController)
         }
