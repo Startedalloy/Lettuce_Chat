@@ -22,21 +22,28 @@ import com.example.lettucechat.viewModel.AuthState
 import com.example.lettucechat.viewModel.ChatViewModel
 
 @Composable
-fun HomeScreen(chatViewModel: ChatViewModel,navController: NavController) {
+fun HomeScreen(chatViewModel: ChatViewModel, navController: NavController) {
 
     val authState = chatViewModel.authState.observeAsState(AuthState.Loading)
     val context = LocalContext.current
 
-    LaunchedEffect (authState.value){
-        when(authState.value){
-            is AuthState.Authenticated-> navController.navigate(Routes.HOME)
-            is AuthState.UnAuthenticated-> navController.navigate(Routes.SIGNUP)
-            is AuthState.Error -> Toast.makeText(context,
-                (authState.value as AuthState.Error).message,Toast.LENGTH_SHORT).show()
+    LaunchedEffect(authState.value) {
+        when (authState.value) {
+
+            is AuthState.UnAuthenticated -> navController.navigate(Routes.LOGIN) {
+                popUpTo(Routes.HOME) { inclusive = true }
+                launchSingleTop = true
+            }
+
+            is AuthState.Error -> Toast.makeText(
+                context,
+                (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT
+            ).show()
+
             else -> Unit
         }
     }
-    
+
     Column(
         Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -45,7 +52,8 @@ fun HomeScreen(chatViewModel: ChatViewModel,navController: NavController) {
         Text("Home Screen", fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(16.dp))
         Button(
-            onClick = {chatViewModel.signOut()
+            onClick = {
+                chatViewModel.signOut()
             }
         ) {
             Text("Sign Out")

@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 class ChatViewModel : ViewModel() {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val _authState = MutableLiveData<AuthState>()
+    private val _authState = MutableLiveData<AuthState>(AuthState.Loading)
     val authState = _authState
 
     init {

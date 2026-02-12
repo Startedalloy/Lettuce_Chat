@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -19,13 +20,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.lettucechat.navigation.Routes
@@ -35,15 +36,19 @@ import com.example.lettucechat.viewModel.ChatViewModel
 @Composable
 fun LoginScreen(chatViewModel: ChatViewModel, navController: NavController) {
 
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
-    val authState = chatViewModel.authState.observeAsState()
+    var email by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+    val authState = chatViewModel.authState.observeAsState(AuthState.Loading)
     val context = LocalContext.current
+    val isLoading = authState.value is AuthState.Loading
 
     LaunchedEffect(authState.value) {
         when (authState.value) {
-            is AuthState.Authenticated -> navController.navigate(Routes.HOME)
+            is AuthState.Authenticated -> navController.navigate(Routes.HOME) {
+                popUpTo(Routes.LOGIN) { inclusive = true }
+                launchSingleTop = true
+            }
+
             is AuthState.Error -> Toast.makeText(
                 context,
                 (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT
@@ -81,16 +86,24 @@ fun LoginScreen(chatViewModel: ChatViewModel, navController: NavController) {
             label = { Text("Enter Your Password") },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = PasswordVisualTransformation()
         )
 
         Spacer(Modifier.height(16.dp))
 
         Button(
             onClick = { chatViewModel.login(email, password) },
-            Modifier.fillMaxWidth()
-        ) { Text("Login") }
+            Modifier.fillMaxWidth(),
+            enabled = !isLoading
+        ) {
+            if (isLoading) {
+                CircularProgressIndicator()
+            } else {
+                Text("Login")
+            }
+        }
 
-        TextButton(onClick = {navController.navigate(Routes.SIGNUP)}) { Text("Don't have an account ? Signup") }
+        TextButton(onClick = { navController.navigate(Routes.SIGNUP) }) { Text("Don't have an account ? Signup") }
     }
 }
