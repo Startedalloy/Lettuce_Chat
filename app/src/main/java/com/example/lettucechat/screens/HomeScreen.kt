@@ -24,7 +24,7 @@ import com.example.lettucechat.viewModel.ChatViewModel
 @Composable
 fun HomeScreen(chatViewModel: ChatViewModel,navController: NavController) {
 
-    val authState = chatViewModel.authState.observeAsState()
+    val authState = chatViewModel.authState.observeAsState(AuthState.Loading)
     val context = LocalContext.current
 
     LaunchedEffect (authState.value){
