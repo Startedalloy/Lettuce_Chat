@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "899938853027",
+    "project_id": "lettuce-chat-c1cc8",
+    "storage_bucket": "lettuce-chat-c1cc8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899938853027:android:0decaaa38f509a52781f16",
+        "android_client_info": {
+          "package_name": "com.example.lettucechat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeRhi_jvtlPAVrgNnsJP30gla7-jnJe1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
