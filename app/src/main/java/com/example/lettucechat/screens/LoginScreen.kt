@@ -31,14 +31,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.lettucechat.navigation.Routes
 import com.example.lettucechat.viewModel.AuthState
-import com.example.lettucechat.viewModel.ChatViewModel
+import com.example.lettucechat.viewModel.AuthViewModel
 
 @Composable
-fun LoginScreen(chatViewModel: ChatViewModel, navController: NavController) {
+fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
 
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
-    val authState = chatViewModel.authState.observeAsState(AuthState.Loading)
+    val authState = authViewModel.authState.observeAsState(AuthState.Loading)
     val context = LocalContext.current
     val isLoading = authState.value is AuthState.Loading
 
@@ -93,7 +93,7 @@ fun LoginScreen(chatViewModel: ChatViewModel, navController: NavController) {
         Spacer(Modifier.height(16.dp))
 
         Button(
-            onClick = { chatViewModel.login(email, password) },
+            onClick = { authViewModel.login(email, password) },
             Modifier.fillMaxWidth(),
             enabled = !isLoading
         ) {

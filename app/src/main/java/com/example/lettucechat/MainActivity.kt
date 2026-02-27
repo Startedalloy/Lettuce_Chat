@@ -7,14 +7,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lettucechat.navigation.Navigation
 import com.example.lettucechat.ui.theme.LettuceChatTheme
-import com.example.lettucechat.viewModel.ChatViewModel
+import com.example.lettucechat.viewModel.AuthViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val viewModel: ChatViewModel = viewModel()
+            val viewModel: AuthViewModel = viewModel()
             LettuceChatTheme {
                 Navigation(viewModel)
             }

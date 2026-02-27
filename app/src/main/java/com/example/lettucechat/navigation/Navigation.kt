@@ -17,12 +17,12 @@ import com.example.lettucechat.screens.HomeScreen
 import com.example.lettucechat.screens.LoginScreen
 import com.example.lettucechat.screens.SignupScreen
 import com.example.lettucechat.viewModel.AuthState
-import com.example.lettucechat.viewModel.ChatViewModel
+import com.example.lettucechat.viewModel.AuthViewModel
 
 @Composable
-fun Navigation(chatViewModel: ChatViewModel) {
+fun Navigation(authViewModel: AuthViewModel) {
     val navController = rememberNavController()
-    val authState by chatViewModel.authState.observeAsState(AuthState.Loading)
+    val authState by authViewModel.authState.observeAsState(AuthState.Loading)
 
     if (authState is AuthState.Loading) {
         Column(
@@ -45,13 +45,13 @@ fun Navigation(chatViewModel: ChatViewModel) {
 
     NavHost(navController, startDestination = startDestination, builder = {
         composable(Routes.LOGIN) {
-            LoginScreen(chatViewModel, navController)
+            LoginScreen(authViewModel, navController)
         }
         composable(Routes.SIGNUP) {
-            SignupScreen(chatViewModel, navController)
+            SignupScreen(authViewModel, navController)
         }
         composable(Routes.HOME) {
-            HomeScreen(chatViewModel, navController)
+            HomeScreen(authViewModel, navController)
         }
     })
 

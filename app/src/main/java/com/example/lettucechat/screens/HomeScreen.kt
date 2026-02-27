@@ -19,12 +19,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.lettucechat.navigation.Routes
 import com.example.lettucechat.viewModel.AuthState
-import com.example.lettucechat.viewModel.ChatViewModel
+import com.example.lettucechat.viewModel.AuthViewModel
 
 @Composable
-fun HomeScreen(chatViewModel: ChatViewModel, navController: NavController) {
+fun HomeScreen(authViewModel: AuthViewModel, navController: NavController) {
 
-    val authState = chatViewModel.authState.observeAsState(AuthState.Loading)
+    val authState = authViewModel.authState.observeAsState(AuthState.Loading)
     val context = LocalContext.current
 
     LaunchedEffect(authState.value) {
@@ -53,7 +53,7 @@ fun HomeScreen(chatViewModel: ChatViewModel, navController: NavController) {
         Spacer(Modifier.height(16.dp))
         Button(
             onClick = {
-                chatViewModel.signOut()
+                authViewModel.signOut()
             }
         ) {
             Text("Sign Out")

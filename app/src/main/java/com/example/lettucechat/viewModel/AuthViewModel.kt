@@ -2,10 +2,9 @@ package com.example.lettucechat.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.CreationExtras
 import com.google.firebase.auth.FirebaseAuth
 
-class ChatViewModel : ViewModel() {
+class AuthViewModel : ViewModel() {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val _authState = MutableLiveData<AuthState>(AuthState.Loading)
