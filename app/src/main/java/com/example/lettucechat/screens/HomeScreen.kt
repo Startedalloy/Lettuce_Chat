@@ -58,6 +58,15 @@ fun HomeScreen(authViewModel: AuthViewModel, navController: NavController) {
         ) {
             Text("Sign Out")
         }
+        Spacer(Modifier.height(12.dp))
+
+        Button(
+            onClick = {
+                navController.navigate(Routes.CHAT)
+            }
+        ) {
+            Text("Open Chat")
+        }
     }
 
 }

@@ -13,11 +13,15 @@ class ChatViewModel(private val repository: ChatRepository) : ViewModel() {
     private val _uiState = MutableStateFlow(ChatUiState())
     var uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
 
-    fun LoadMessage() {
+    init {
+        LoadMessage()
+    }
+
+   private fun LoadMessage() {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
-            repository.observer().collect { Message ->
-                _uiState.value = _uiState.value.copy(message = Message, isLoading = false)
+            repository.observer().collect { message ->
+                _uiState.value = _uiState.value.copy(message = message, isLoading = false)
             }
         }
 

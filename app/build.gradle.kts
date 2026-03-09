@@ -43,10 +43,12 @@ android {
 dependencies {
     //observeAsState()
     implementation("androidx.compose.runtime:runtime-livedata:1.7.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
     //ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.8.7")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -60,6 +62,7 @@ dependencies {
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

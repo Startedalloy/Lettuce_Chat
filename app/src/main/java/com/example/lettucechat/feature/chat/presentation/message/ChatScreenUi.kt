@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.lettucechat.feature.chat.domain.model.Message
 
@@ -33,24 +34,38 @@ import com.example.lettucechat.feature.chat.domain.model.Message
 @Composable
 fun ChatScreenUi(chatViewModel: ChatViewModel) {
 
+    val state by chatViewModel.uiState.collectAsState()
+
     Column(Modifier.fillMaxSize()) {
-        val state by chatViewModel.uiState.collectAsState()
+
 
         if (state.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
         }
+        state.errorMessage?.let { error ->
+            Text(
+                text = error,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                textAlign = TextAlign.Center
+            )
+        }
+
         LazyColumn(Modifier.weight(1f), reverseLayout = true) {
             items(state.message) { message ->
                 MessageBubble(message)
             }
         }
 
+        ChatInput(
+            onSendClick = { text ->
+                chatViewModel.sendMessage(text)
+            }
+        )
+
     }
-    ChatInput(
-        onSendClick = { text ->
-            chatViewModel.sendMessage(text)
-        }
-    )
+
 
 }
 
