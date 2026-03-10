@@ -1,6 +1,7 @@
 package com.example.lettucechat.screens
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,11 +9,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -24,11 +30,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.lettucechat.Primary
+import com.example.lettucechat.R
+import com.example.lettucechat.Secondary
 import com.example.lettucechat.navigation.Routes
 import com.example.lettucechat.viewModel.AuthState
 import com.example.lettucechat.viewModel.AuthViewModel
@@ -57,53 +69,97 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
             else -> Unit
         }
     }
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("Welcome Back!", style = MaterialTheme.typography.headlineMedium)
-
-        Spacer(Modifier.height(32.dp))
-
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Enter Your Email") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-
+    Surface(Modifier.fillMaxSize(), color = Primary) {
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(24.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.bglogo),
+                contentDescription = "App Logo",
+                modifier = Modifier
+                    .size(200.dp)
+                    .padding(bottom = 4.dp)
+            )
+            Text(
+                "Welcome Back!",
+                style = MaterialTheme.typography.headlineMedium,
+                color = Secondary,
+                fontWeight = FontWeight.Bold
             )
 
-        Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(24.dp))
 
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Enter Your Password") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            visualTransformation = PasswordVisualTransformation()
-        )
+            OutlinedTextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Enter Your Email") },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                shape = RoundedCornerShape(32.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedBorderColor = Secondary,
+                    unfocusedBorderColor = Color.Gray,
+                    focusedLabelColor = Secondary,
+                    unfocusedLabelColor = Color.Gray
+                )
+            )
 
-        Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(16.dp))
 
-        Button(
-            onClick = { authViewModel.login(email, password) },
-            Modifier.fillMaxWidth(),
-            enabled = !isLoading
-        ) {
-            if (isLoading) {
-                CircularProgressIndicator()
-            } else {
-                Text("Login")
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Enter Your Password") },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                visualTransformation = PasswordVisualTransformation(),
+                shape = RoundedCornerShape(32.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedBorderColor = Secondary,
+                    unfocusedBorderColor = Color.Gray,
+                    focusedLabelColor = Secondary,
+                    unfocusedLabelColor = Color.Gray
+                )
+            )
+
+            Spacer(Modifier.height(24.dp))
+
+            Button(
+                onClick = { authViewModel.login(email, password) },
+                Modifier.fillMaxWidth().height(56.dp),
+                shape = RoundedCornerShape(32.dp),
+                enabled = !isLoading,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Secondary,
+                    contentColor = Primary
+                )
+            ) {
+                if (isLoading) {
+                    CircularProgressIndicator(color = Primary, strokeWidth = 2.dp)
+                } else {
+                    Text("Login", fontWeight = FontWeight.ExtraBold)
+                }
+            }
+
+            Spacer(Modifier.height(8.dp))
+
+            TextButton(onClick = { navController.navigate(Routes.SIGNUP) }) {
+                Text(
+                    "Don't have an account ? Signup",
+                    fontWeight = FontWeight.Bold,
+                    color = Secondary
+                )
             }
         }
-
-        TextButton(onClick = { navController.navigate(Routes.SIGNUP) }) { Text("Don't have an account ? Signup") }
     }
 }

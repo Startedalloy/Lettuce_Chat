@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.lettucechat.Primary
 import com.example.lettucechat.navigation.Routes
 import com.example.lettucechat.viewModel.AuthState
 import com.example.lettucechat.viewModel.AuthViewModel
@@ -43,30 +45,30 @@ fun HomeScreen(authViewModel: AuthViewModel, navController: NavController) {
             else -> Unit
         }
     }
-
-    Column(
-        Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("Home Screen", fontWeight = FontWeight.Bold)
-        Spacer(Modifier.height(16.dp))
-        Button(
-            onClick = {
-                authViewModel.signOut()
-            }
+    Surface(Modifier.fillMaxSize(), color = Primary) {
+        Column(
+            Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Sign Out")
-        }
-        Spacer(Modifier.height(12.dp))
-
-        Button(
-            onClick = {
-                navController.navigate(Routes.CHAT)
+            Text("Home Screen", fontWeight = FontWeight.Bold)
+            Spacer(Modifier.height(16.dp))
+            Button(
+                onClick = {
+                    authViewModel.signOut()
+                }
+            ) {
+                Text("Sign Out")
             }
-        ) {
-            Text("Open Chat")
+            Spacer(Modifier.height(12.dp))
+
+            Button(
+                onClick = {
+                    navController.navigate(Routes.CHAT)
+                }
+            ) {
+                Text("Open Chat")
+            }
         }
     }
-
 }
