@@ -9,5 +9,5 @@ interface ChatRepository {
 
     suspend fun sendMessage(text: String)
     suspend fun editMessage(text: String, newText: String)
-    suspend fun deleteMessage(text: String, newText: String)
+    suspend fun deleteMessage(text: String)
 }

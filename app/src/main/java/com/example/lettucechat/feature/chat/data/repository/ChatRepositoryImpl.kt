@@ -53,7 +53,7 @@ class ChatRepositoryImpl(
         doc.reference.update("text", newText.trim()).await()
     }
 
-    override suspend fun deleteMessage(text: String, newText: String) {
+    override suspend fun deleteMessage(text: String) {
         val querySnapshot = collection.whereEqualTo("text", text).limit(1).get().await()
         val doc = querySnapshot.documents.firstOrNull() ?: return
         doc.reference.delete().await()

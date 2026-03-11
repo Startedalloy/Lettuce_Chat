@@ -7,5 +7,9 @@ data class ChatUiState(
 
     var isLoading : Boolean = false,
 
-    var errorMessage: String? = null
+    var errorMessage: String? = null,
+
+    val selectedMessage: Message? = null,
+
+    val isSelectionMode: Boolean = false
 )

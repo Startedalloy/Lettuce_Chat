@@ -2,6 +2,7 @@ package com.example.lettucechat.feature.chat.presentation.message
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.lettucechat.feature.chat.domain.model.Message
 import com.example.lettucechat.feature.chat.domain.repository.ChatRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,10 +15,10 @@ class ChatViewModel(private val repository: ChatRepository) : ViewModel() {
     var uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
 
     init {
-        LoadMessage()
+        loadMessage()
     }
 
-   private fun LoadMessage() {
+   private fun loadMessage() {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
             repository.observer().collect { message ->
@@ -38,4 +39,33 @@ class ChatViewModel(private val repository: ChatRepository) : ViewModel() {
         }
     }
 
+    fun onMessageLongClick(message: Message) {
+        _uiState.value = _uiState.value.copy(
+            selectedMessage = message,
+            isSelectionMode = true
+        )
+    }
+
+    fun clearSelection() {
+        _uiState.value = _uiState.value.copy(
+            selectedMessage = null,
+            isSelectionMode = false
+        )
+    }
+
+    fun deleteSelectedMessage() {
+        val message = _uiState.value.selectedMessage ?: return
+        viewModelScope.launch {
+            repository.deleteMessage(message.text)
+            clearSelection()
+        }
+    }
+
+    fun editSelectedMessage(newText: String) {
+        val message = _uiState.value.selectedMessage ?: return
+        viewModelScope.launch {
+            repository.editMessage(message.text, newText)
+            clearSelection()
+        }
+    }
 }

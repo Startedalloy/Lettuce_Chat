@@ -48,6 +48,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.8.7")
+    implementation("androidx.compose.material:material-icons-extended:1.7.0")
 
 
     implementation(libs.androidx.core.ktx)
@@ -63,6 +64,7 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
     implementation(libs.firebase.firestore)
+    implementation(libs.androidx.compose.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
