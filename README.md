@@ -6,7 +6,7 @@
 
 ## 📱 Screenshots
 
-| Splash / Welcome | Authentication | Chat Interface |
+| Authentication | HomeScreen | Chat Interface |
 | :---: | :---: | :---: |
 | <img src="https://github.com/user-attachments/assets/822dca19-f725-4df0-955f-b29afb8b760a" width="200"> | <img src="https://github.com/user-attachments/assets/9b9462ec-f991-45fa-8ebb-1c43d8602859" width="200"> | <img src="https://github.com/user-attachments/assets/155caf71-1558-4642-a4cf-ea71834723db" width="200"> |
 
