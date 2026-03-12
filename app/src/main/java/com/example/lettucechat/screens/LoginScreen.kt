@@ -31,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -82,7 +83,8 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
                 contentDescription = "App Logo",
                 modifier = Modifier
                     .size(200.dp)
-                    .padding(bottom = 4.dp)
+                    .padding(bottom = 4.dp),
+                contentScale = ContentScale.Crop
             )
             Text(
                 "Welcome Back!",
