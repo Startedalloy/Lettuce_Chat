@@ -8,6 +8,8 @@ interface ChatRepository {
     fun observer(): Flow<List<Message>>
 
     suspend fun sendMessage(text: String)
-    suspend fun editMessage(text: String, newText: String)
-    suspend fun deleteMessage(text: String)
+
+    fun getCurrentUserId(): String?
+    suspend fun editMessage(messageId: String, newText: String)
+    suspend fun deleteMessage(messageId: String)
 }

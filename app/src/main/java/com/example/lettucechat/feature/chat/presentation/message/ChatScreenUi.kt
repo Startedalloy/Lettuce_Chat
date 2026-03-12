@@ -23,6 +23,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -54,7 +55,11 @@ fun ChatScreenUi(chatViewModel: ChatViewModel) {
                 TopAppBar(
                     title = { Text("Message Options") },
                     navigationIcon = {
-                        IconButton(onClick = { chatViewModel.clearSelection() }) {
+                        IconButton(onClick = {
+                            chatViewModel.clearSelection()
+                            showEditDialog = false
+                        }) {
+
                             Icon(Icons.Default.Close, contentDescription = "Cancel")
                         }
                     },
@@ -79,6 +84,20 @@ fun ChatScreenUi(chatViewModel: ChatViewModel) {
         ) {
             // ... (Your CircularProgressIndicator and Error Text)
 
+            if (state.errorMessage != null) {
+                Text(
+                    text = state.errorMessage!!,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                )
+                TextButton(onClick = { chatViewModel.clearError() }) {
+                    Text("Dismiss")
+                }
+            }
+
+
             LazyColumn(Modifier.weight(1f), reverseLayout = true) {
                 items(state.message) { message ->
                     MessageBubble(
@@ -95,12 +114,13 @@ fun ChatScreenUi(chatViewModel: ChatViewModel) {
     }
 
     // Basic Edit Dialog
-    if (showEditDialog) {
+    if (showEditDialog && state.selectedMessage != null) {
         EditMessageDialog(
             initialText = state.selectedMessage?.text ?: "",
-            onDismiss = { },
+            onDismiss = { showEditDialog = false },
             onConfirm = { newText ->
                 chatViewModel.editSelectedMessage(newText)
+                showEditDialog = false
             }
         )
     }

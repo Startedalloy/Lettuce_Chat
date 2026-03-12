@@ -3,13 +3,15 @@ package com.example.lettucechat.feature.chat.presentation.message
 import com.example.lettucechat.feature.chat.domain.model.Message
 
 data class ChatUiState(
-    var message: List<Message> = emptyList(),
+    val message: List<Message> = emptyList(),
 
-    var isLoading : Boolean = false,
+    val isLoading: Boolean = false,
 
-    var errorMessage: String? = null,
+    val errorMessage: String? = null,
 
     val selectedMessage: Message? = null,
 
-    val isSelectionMode: Boolean = false
+    val isSelectionMode: Boolean = false,
+
+    val currentUserId: String? = null
 )
