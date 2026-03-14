@@ -17,7 +17,6 @@
 * **Real-time Messaging:** Instant message delivery powered by Firebase.
 * **Secure Auth:** User registration and login via Firebase Authentication.
 * **Modern UI:** Built entirely with Jetpack Compose for a reactive, smooth feel.
-* **Clean Architecture:** Implements **MVVM** pattern for scalable and maintainable code.
 * **Visuals:** A curated minimalist aesthetic using custom color palettes.
 
 ---
